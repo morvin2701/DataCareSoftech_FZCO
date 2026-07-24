@@ -54,6 +54,13 @@ export default function Products() {
     return () => window.removeEventListener('hashchange', handleHash)
   }, [])
 
+  const handleCardClick = (e, index) => {
+    // Prevent overriding clicks on actual links or buttons inside the card
+    if (e.target.closest('a, button')) return
+    const nextIndex = (index + 1) % products.length
+    scrollToIndex(nextIndex)
+  }
+
   return (
     <section className="section section--snug" id="products">
       <div className="container">
@@ -124,11 +131,13 @@ export default function Products() {
             ref={trackRef}
             onScroll={updateActiveIndex}
           >
-            {products.map((p) => (
+            {products.map((p, i) => (
               <article
                 className="prod-panel"
                 id={p.id}
                 key={p.no}
+                onClick={(e) => handleCardClick(e, i)}
+                title="Tap banner to view next edition"
               >
                 <span className="prod-panel__ghost" aria-hidden="true">
                   {p.no}
