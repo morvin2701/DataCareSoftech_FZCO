@@ -1598,17 +1598,137 @@ h1, h2, h3, h4 {
   height: 13px;
 }
 
-/* dark quote panel — the section's contrast anchor */
+/* dark quote panel — moving water background theme */
 .about-quote {
   position: relative;
   overflow: hidden;
   margin-block: clamp(56px, 7vw, 100px) clamp(48px, 6vw, 80px);
   border-radius: 26px;
   padding: clamp(44px, 6vw, 90px) clamp(28px, 6vw, 110px);
-  background:
-    radial-gradient(120% 170% at 85% -30%, rgba(212, 175, 106, 0.22), transparent 55%),
-    var(--dark);
+  background: #130e09;
+  border: 1px solid rgba(212, 175, 106, 0.25);
+  box-shadow: var(--shadow-lg), 0 24px 60px -16px rgba(0, 0, 0, 0.6);
 }
+
+.about-quote__water-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.water-wave {
+  position: absolute;
+  border-radius: 43% 47% 45% 42%;
+  opacity: 0.25;
+  filter: blur(28px);
+  will-change: transform;
+}
+
+.water-wave.wave-1 {
+  width: 140%;
+  height: 160%;
+  top: -40%;
+  left: -20%;
+  background: radial-gradient(circle at 50% 50%, rgba(212, 175, 106, 0.55), rgba(138, 106, 48, 0.15) 70%, transparent);
+  animation: waterFlow 14s infinite ease-in-out alternate;
+}
+
+.water-wave.wave-2 {
+  width: 160%;
+  height: 180%;
+  bottom: -50%;
+  right: -30%;
+  background: radial-gradient(circle at 40% 60%, rgba(208, 167, 94, 0.45), rgba(46, 35, 18, 0.2) 60%, transparent);
+  animation: waterFlow 18s infinite ease-in-out alternate-reverse;
+}
+
+.water-wave.wave-3 {
+  width: 130%;
+  height: 150%;
+  top: -10%;
+  right: -10%;
+  background: radial-gradient(circle at 60% 30%, rgba(244, 238, 225, 0.25), rgba(212, 175, 106, 0.12) 60%, transparent);
+  animation: waterDrift 22s infinite ease-in-out linear;
+}
+
+.water-caustics {
+  position: absolute;
+  bottom: -15%;
+  left: -5%;
+  width: 110%;
+  height: 100%;
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.wave-path-1 {
+  fill: url(#waterGrad1);
+  animation: svgWave1 10s ease-in-out infinite alternate;
+}
+
+.wave-path-2 {
+  fill: url(#waterGrad2);
+  animation: svgWave2 14s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes waterFlow {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    border-radius: 43% 47% 45% 42%;
+  }
+  33% {
+    transform: translate(5%, 7%) rotate(110deg) scale(1.08);
+    border-radius: 47% 42% 44% 48%;
+  }
+  66% {
+    transform: translate(-4%, 3%) rotate(220deg) scale(0.94);
+    border-radius: 41% 49% 46% 43%;
+  }
+  100% {
+    transform: translate(3%, -5%) rotate(360deg) scale(1.05);
+    border-radius: 43% 47% 45% 42%;
+  }
+}
+
+@keyframes waterDrift {
+  0% {
+    transform: translate(-4%, -4%) rotate(0deg);
+  }
+  50% {
+    transform: translate(4%, 4%) rotate(180deg);
+  }
+  100% {
+    transform: translate(-4%, -4%) rotate(360deg);
+  }
+}
+
+@keyframes svgWave1 {
+  0% {
+    transform: translateX(0) scaleY(1);
+  }
+  50% {
+    transform: translateX(-40px) scaleY(1.18);
+  }
+  100% {
+    transform: translateX(30px) scaleY(0.92);
+  }
+}
+
+@keyframes svgWave2 {
+  0% {
+    transform: translateX(0) scaleY(1);
+  }
+  50% {
+    transform: translateX(50px) scaleY(0.85);
+  }
+  100% {
+    transform: translateX(-25px) scaleY(1.12);
+  }
+}
+
 .about-quote::before {
   content: '“';
   position: absolute;
@@ -1619,6 +1739,7 @@ h1, h2, h3, h4 {
   line-height: 1;
   color: rgba(212, 175, 106, 0.16);
   pointer-events: none;
+  z-index: 1;
 }
 .about-quote blockquote {
   position: relative;
@@ -1630,12 +1751,14 @@ h1, h2, h3, h4 {
   max-width: 26ch;
   margin-inline: auto;
   text-align: center;
+  z-index: 2;
 }
 .about-quote blockquote em {
   font-style: italic;
   color: var(--gold-bright);
 }
 .about-quote figcaption {
+  position: relative;
   margin-top: 26px;
   text-align: center;
   font-size: 11.5px;
@@ -1643,6 +1766,7 @@ h1, h2, h3, h4 {
   letter-spacing: 0.26em;
   text-transform: uppercase;
   color: var(--gold-bright);
+  z-index: 2;
 }
 
 .offices {

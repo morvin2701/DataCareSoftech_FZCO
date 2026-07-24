@@ -253,6 +253,33 @@ export default function About() {
         </div>
 
         <figure className="about-quote" data-reveal="scale">
+          {/* Animated Water / Liquid Flow Background */}
+          <div className="about-quote__water-bg" aria-hidden="true">
+            <div className="water-wave wave-1" />
+            <div className="water-wave wave-2" />
+            <div className="water-wave wave-3" />
+            <svg className="water-caustics" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="waterGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="rgba(212, 175, 106, 0.22)" />
+                  <stop offset="100%" stopColor="rgba(138, 106, 48, 0.04)" />
+                </linearGradient>
+                <linearGradient id="waterGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="rgba(244, 238, 225, 0.12)" />
+                  <stop offset="100%" stopColor="rgba(212, 175, 106, 0.18)" />
+                </linearGradient>
+              </defs>
+              <path
+                className="wave-path-1"
+                d="M0,192L48,202.7C96,213,192,235,288,224C384,213,480,171,576,165.3C672,160,768,192,864,197.3C960,203,1056,181,1152,165.3C1248,150,1344,139,1392,133.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+              />
+              <path
+                className="wave-path-2"
+                d="M0,128L48,149.3C96,171,192,213,288,213.3C384,213,480,171,576,149.3C672,128,768,128,864,144C960,160,1056,192,1152,197.3C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+              />
+            </svg>
+          </div>
+
           <blockquote>
             “A jeweller's ledger is a <em>promise</em> — to customers, to partners, to family.
             Our job is making sure that promise is kept, to the last milligram.”
