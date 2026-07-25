@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap, ScrollTrigger, reducedMotion } from '../lib/anim.js'
+import AsciiRain from '../components/AsciiRain.jsx'
+import SmokyText from '../components/SmokyText.jsx'
 import {
   IcCheck,
   IcPin,
@@ -252,7 +254,10 @@ export default function About() {
           </div>
         </div>
 
-        <figure className="about-quote" data-reveal="scale">
+        <figure className="about-quote" data-reveal="scale" style={{ position: 'relative', overflow: 'hidden' }}>
+          {/* Originkit ASCII Rain Background Animation */}
+          <AsciiRain opacity={0.28} color="#d0a75e" fontSize={14} speed={0.9} />
+
           {/* Animated Water / Liquid Flow Background */}
           <div className="about-quote__water-bg" aria-hidden="true">
             <div className="water-wave wave-1" />
@@ -280,11 +285,14 @@ export default function About() {
             </svg>
           </div>
 
-          <blockquote>
-            “A jeweller's ledger is a <em>promise</em> — to customers, to partners, to family.
-            Our job is making sure that promise is kept, to the last milligram.”
+          <blockquote style={{ position: 'relative', zIndex: 2 }}>
+            <SmokyText text="“A jeweller's ledger is a" />{' '}
+            <em>promise</em>{' '}
+            <SmokyText text="— to customers, to partners, to family." />
+            <br />
+            <SmokyText text="Our job is making sure that promise is kept, to the last milligram.”" />
           </blockquote>
-          <figcaption>Founding team — Datacare Softech FZCO</figcaption>
+          <figcaption style={{ position: 'relative', zIndex: 2 }}>Founding team — Datacare Softech FZCO</figcaption>
         </figure>
 
         <div className="values-grid" data-reveal-group="tilt">

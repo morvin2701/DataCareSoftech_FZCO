@@ -3097,3 +3097,317 @@ html.has-js [data-reveal] {
     transform: none !important;
   }
 }
+
+/* ---------------------------------------------------------------
+   Originkit 3D Flip Gallery Component Styles
+--------------------------------------------------------------- */
+.originkit-flip-gallery-wrapper {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  user-select: none;
+}
+
+.originkit-flip-container {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.flip-zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  pointer-events: auto;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.originkit-flip-container:hover .flip-zone {
+  opacity: 1;
+}
+
+.flip-zone--left {
+  left: 0;
+  justify-content: flex-start;
+  padding-left: 12px;
+}
+.flip-zone--right {
+  right: 0;
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+
+.flip-hint-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(36, 30, 16, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: #d0a75e;
+  font-size: 22px;
+  font-weight: 300;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.flip-zone:hover .flip-hint-icon {
+  transform: scale(1.15);
+  background: rgba(176, 140, 72, 0.95);
+  color: #ffffff;
+}
+
+.flip-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.flip-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  padding: 28px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 20px 50px rgba(18, 14, 8, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  backface-visibility: hidden;
+  color: #f4eee1;
+}
+
+.flip-card__glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.flip-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.flip-card__badge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 5px 12px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid currentColor;
+  backdrop-filter: blur(4px);
+}
+
+.flip-card__icon {
+  font-size: 26px;
+}
+
+.flip-card__body {
+  position: relative;
+  z-index: 2;
+  margin-top: 12px;
+}
+
+.flip-card__title {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.flip-card__subtitle {
+  font-size: 14px;
+  color: rgba(244, 238, 225, 0.7);
+  font-style: italic;
+  margin-bottom: 14px;
+  font-family: var(--serif);
+}
+
+.flip-card__desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(244, 238, 225, 0.85);
+}
+
+.flip-card__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.flip-card__stat-val {
+  display: block;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.flip-card__stat-lbl {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(244, 238, 225, 0.6);
+  margin-top: 4px;
+}
+
+.flip-card__tap-hint {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(244, 238, 225, 0.7);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.flip-card__tap-hint span {
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+.flip-card:hover .flip-card__tap-hint span {
+  transform: rotate(180deg);
+}
+
+/* Navigation controls below 3D stack */
+.flip-gallery-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 4px;
+}
+
+.flip-ctrl-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.flip-ctrl-btn:hover {
+  background: var(--gold);
+  color: #ffffff;
+  border-color: var(--gold);
+}
+
+.flip-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.flip-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--line);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+.flip-dot.is-active {
+  width: 24px;
+  border-radius: 100px;
+  background: var(--gold);
+}
+
+@media (max-width: 640px) {
+  .originkit-flip-container {
+    height: 360px;
+  }
+  .flip-card {
+    padding: 20px 22px;
+  }
+  .flip-card__title {
+    font-size: 20px;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Originkit Smoky Text Component Styles
+--------------------------------------------------------------- */
+.originkit-smoky-text-container {
+  display: inline-block;
+}
+
+.smoky-word {
+  position: relative;
+  display: inline-block;
+}
+
+.smoky-word::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 140%;
+  height: 140%;
+  transform: translate(-50%, -50%) scale(0.5);
+  background: radial-gradient(circle, rgba(208, 167, 94, 0.4) 0%, rgba(208, 167, 94, 0) 70%);
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.smoky-word:hover::after {
+  opacity: 1;
+  transform: translate(-50%, -60%) scale(1.6);
+}
+
+@keyframes smokyPulse {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(208, 167, 94, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 25px rgba(208, 167, 94, 0.6), 0 -8px 15px rgba(208, 167, 94, 0.4);
+  }
+}
+
+.about-quote blockquote em {
+  display: inline-block;
+  animation: smokyPulse 3.5s ease-in-out infinite;
+  color: var(--gold-bright);
+  font-style: italic;
+  position: relative;
+}
+
+

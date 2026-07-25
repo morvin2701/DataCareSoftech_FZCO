@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { products } from '../data/products.js'
 import { IcCheck } from '../components/icons.jsx'
+import FlipGallery from '../components/FlipGallery.jsx'
 
 export default function Products() {
   const trackRef = useRef(null)
@@ -55,8 +56,8 @@ export default function Products() {
   }, [])
 
   const handleCardClick = (e, index) => {
-    // Prevent overriding clicks on actual links or buttons inside the card
-    if (e.target.closest('a, button')) return
+    // Prevent overriding clicks on actual links, buttons, or interactive flip gallery cards
+    if (e.target.closest('a, button, .originkit-flip-gallery-wrapper')) return
     const nextIndex = (index + 1) % products.length
     scrollToIndex(nextIndex)
   }
@@ -148,26 +149,14 @@ export default function Products() {
                     <h3>{p.name}</h3>
                     <p className="prod-panel__tag">{p.tag}</p>
                     <p className="desc">{p.desc}</p>
-                    <a href="#contact" className="btn btn--gold">
+                    <a href="#contact" className="btn btn--gold" style={{ marginTop: '20px' }}>
                       {p.enquire ? 'Enquire about bullion' : `See ${p.short.toLowerCase()} in a demo`}{' '}
                       <span className="arr">→</span>
                     </a>
                   </div>
-                  <div className="prod-panel__feats">
-                    <span className="prod-panel__feats-label">What's inside</span>
-                    <ul>
-                      {p.feats.map((f) => (
-                        <li key={f}>
-                          <i className="tick">
-                            <IcCheck />
-                          </i>
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
-                    <p className="prod-panel__feats-note">
-                      Every edition includes billing, stock, khata, schemes and the mobile app.
-                    </p>
+
+                  <div className="prod-panel__feats" style={{ background: 'transparent', boxShadow: 'none', border: 'none', padding: 0 }}>
+                    <FlipGallery editionId={p.id} />
                   </div>
                 </div>
               </article>
@@ -178,4 +167,5 @@ export default function Products() {
     </section>
   )
 }
+
 
