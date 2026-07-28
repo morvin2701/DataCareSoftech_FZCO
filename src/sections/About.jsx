@@ -344,10 +344,10 @@ export default function About() {
             </span>
             <div className="office-card__meta">
               <a href="tel:+918758111027" className="office-card__tel">
-                <IcPhone /> +91 87581 11027
+                <IcPhone /> +91 95586 02244 
               </a>
               <a href="tel:+919558602244" className="office-card__tel">
-                <IcPhone /> +91 95586 02244
+                <IcPhone /> +91 87581 11027
               </a>
               <span className="office-card__hours">
                 <IcClock /> Mon – Sat · 10 AM – 7 PM

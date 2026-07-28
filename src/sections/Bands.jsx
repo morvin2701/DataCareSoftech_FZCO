@@ -1,29 +1,40 @@
-import { useRef, useState } from 'react'
-import { gsap } from '../lib/anim.js'
-import { IcArrowL, IcArrowR } from '../components/icons.jsx'
+import { IcWrench, IcLayers, IcUsers, IcSpark } from '../components/icons.jsx'
+import { useInView } from '../lib/useInView.js'
 
 const STEPS = [
   {
+    no: '01',
     t: 'Setup & configuration',
     d: 'We shape the platform around your metals, purities, rates, taxes and billing formats — before you touch a key.',
+    Icon: IcWrench,
   },
   {
+    no: '02',
     t: 'Data migration',
     d: 'Your existing stock, khata balances and customer records move over intact, verified line by line.',
+    Icon: IcLayers,
   },
   {
+    no: '03',
     t: 'Staff training',
     d: 'Counter staff, accountants and karigars each learn exactly the screens they will use daily.',
+    Icon: IcUsers,
   },
   {
+    no: '04',
     t: 'Go live, backed 24/7',
     d: 'You open the shutters on the new system with our team a phone call — or a WhatsApp — away.',
+    Icon: IcSpark,
   },
 ]
 
 export function Process() {
+  const [trackRef, inView] = useInView()
+
   return (
-    <section className="section" id="process">
+    <section className="section proc" id="process">
+      <span className="proc__aura" aria-hidden="true" />
+
       <div className="container">
         <div className="section-head section-head--split">
           <div>
@@ -39,87 +50,18 @@ export function Process() {
             predictable. Most businesses are fully live within days.
           </p>
         </div>
-        <div className="steps" data-reveal-group="tilt">
-          {STEPS.map((s) => (
-            <div className="step" key={s.t}>
+
+        <div className={`proc-track ${inView ? 'is-in' : ''}`} ref={trackRef}>
+          {STEPS.map((s, i) => (
+            <article className="proc-step" key={s.t} style={{ '--i': i }}>
+              <span className="proc-step__medal">
+                <s.Icon />
+                <em>{s.no}</em>
+              </span>
               <h3>{s.t}</h3>
               <p>{s.d}</p>
-            </div>
+            </article>
           ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* NOTE: replace these with real client quotes when available —
-   attributions are kept role-based on purpose. */
-const QUOTES = [
-  {
-    q: 'The day-end tally used to take us an hour with two people. Now it is a printout — every gram reconciled before the lights go off.',
-    who: 'Owner, retail jewellery house',
-    where: 'Dubai, UAE',
-  },
-  {
-    q: 'We run three warehouses and two hundred B2B accounts on it. Rate changes, tiered pricing, credit limits — nothing slips through anymore.',
-    who: 'Director, wholesale jewellers',
-    where: 'Ahmedabad, India',
-  },
-  {
-    q: 'Loss tracking on the factory floor paid for the software in the first quarter. We finally know where every milligram goes.',
-    who: 'Production head, manufacturing unit',
-    where: 'Mumbai, India',
-  },
-]
-
-export function Testimonials() {
-  const [idx, setIdx] = useState(0)
-  const boxRef = useRef(null)
-
-  const go = (dir) => {
-    const box = boxRef.current
-    gsap.to(box, {
-      opacity: 0,
-      y: 14,
-      duration: 0.28,
-      ease: 'power2.in',
-      onComplete: () => {
-        setIdx((i) => (i + dir + QUOTES.length) % QUOTES.length)
-        gsap.fromTo(box, { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' })
-      },
-    })
-  }
-
-  const t = QUOTES[idx]
-
-  return (
-    <section className="section testi-band" id="testimonials">
-      <div className="container">
-        <p className="eyebrow" data-reveal="fade">
-          <span className="index">07</span> What clients say
-        </p>
-        <div ref={boxRef} className="testi" style={{ marginTop: 34 }} data-reveal="up">
-          <blockquote className="testi__quote">
-            “{t.q}”
-          </blockquote>
-          <div className="testi__who">
-            <span className="testi__avatar">”</span>
-            <div>
-              <b>{t.who}</b>
-              <span>{t.where}</span>
-            </div>
-          </div>
-        </div>
-        <div className="testi__nav" data-reveal="fade">
-          <button className="testi__btn" onClick={() => go(-1)} aria-label="Previous testimonial">
-            <IcArrowL />
-          </button>
-          <button className="testi__btn" onClick={() => go(1)} aria-label="Next testimonial">
-            <IcArrowR />
-          </button>
-          <span className="testi__count">
-            {String(idx + 1).padStart(2, '0')} / {String(QUOTES.length).padStart(2, '0')}
-          </span>
         </div>
       </div>
     </section>

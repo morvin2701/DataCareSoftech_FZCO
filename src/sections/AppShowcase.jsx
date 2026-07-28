@@ -1,234 +1,394 @@
-import { useEffect, useRef } from 'react'
-import { gsap, reducedMotion } from '../lib/anim.js'
+import React, { useState } from 'react'
 import {
-  IcCheck,
-  IcMobile,
-  IcWhatsApp,
+  IcApprove,
   IcChart,
-  IcBarcode,
+  IcMobile,
+  IcRfid,
+  IcShield,
   IcUsers,
-  IcStore,
-  IcReceipt,
+  IcWhatsApp,
 } from '../components/icons.jsx'
 
-const fmt = (n, dec = 0) =>
-  n.toLocaleString('en-IN', { minimumFractionDigits: dec, maximumFractionDigits: dec })
-
 export default function AppShowcase() {
-  const visualRef = useRef(null)
+  const [activeTab, setActiveTab] = useState(0)
 
-  /* screen comes alive when scrolled into view: chart draws, numbers count,
-     then notifications keep "arriving" on a loop */
-  useEffect(() => {
-    const root = visualRef.current
-    const reduce = reducedMotion()
+  const officialFeatures = [
+    {
+      id: 'sync',
+      icon: IcRfid,
+      title: 'Real-time Sync',
+      subtitle: 'Instant Multi-Store Cloud Sync',
+      desc: 'All your stock, sales, and Karigar touch ledger data is instantly updated across devices for seamless business management.',
+      tag: 'INSTANT CLOUD SYNC',
+      accent: '#30d158',
+      preview: {
+        metric: '100% Realtime',
+        sub: '3 Branches & Mobile App Synced',
+        detail: 'Zero latency database replication across Android & iOS devices',
+      },
+    },
+    {
+      id: 'security',
+      icon: IcShield,
+      title: 'Bank-Grade Security',
+      subtitle: '256-Bit Encrypted Storage',
+      desc: 'Your financial information, customer records, and ledger balances are protected with advanced encryption and secure cloud backups.',
+      tag: 'BANK-GRADE ENCRYPTION',
+      accent: '#00f0ff',
+      preview: {
+        metric: '256-Bit SSL',
+        sub: 'Role-Based Access Control',
+        detail: 'Encrypted cloud storage with automatic hourly secure backups',
+      },
+    },
+    {
+      id: 'analytics',
+      icon: IcChart,
+      title: 'Instant Analytics',
+      subtitle: 'Real-Time Executive Intelligence',
+      desc: 'Get actionable insights and live reports on daily counter sales, vault stock valuation, and customer purchasing trends.',
+      tag: 'EXECUTIVE INTELLIGENCE',
+      accent: '#ffd885',
+      preview: {
+        metric: 'Live Spot MCX',
+        sub: 'Gold 24K & Silver Analytics',
+        detail: 'Real-time revenue metrics, profit margin calculation & stock reports',
+      },
+    },
+    {
+      id: 'ui',
+      icon: IcMobile,
+      title: 'Touch-Optimized UI',
+      subtitle: 'Fluid Smartphone & Tablet UX',
+      desc: 'Enjoy a smooth, intuitive interface designed specifically for touchscreen mobile phones and iPad tablets.',
+      tag: 'SMARTPHONE & TABLET',
+      accent: '#e8c88b',
+      preview: {
+        metric: 'Fluid 60 FPS UX',
+        sub: 'Touch-Friendly Counter POS',
+        detail: 'Fast one-tap billing, rate locking, and instant receipt generation',
+      },
+    },
+    {
+      id: 'crm',
+      icon: IcUsers,
+      title: 'Customer Management',
+      subtitle: 'CRM & WhatsApp Integration',
+      desc: 'Easily manage customer profiles, scheme savings plans, due reminders, and WhatsApp billing communications from anywhere.',
+      tag: 'CRM & WHATSAPP NATIVE',
+      accent: '#25d366',
+      preview: {
+        metric: 'WhatsApp Direct',
+        sub: 'Instant Customer Receipts',
+        detail: 'Automated due payment reminders and Gold Scheme savings tracking',
+      },
+    },
+  ]
 
-    const ctx = gsap.context(() => {
-      const line = root.querySelector('.app-line')
-      const fill = root.querySelector('.app-fill')
-      const nums = root.querySelectorAll('[data-anum]')
-      const notifs = root.querySelectorAll('.app-notif')
-
-      const render = (el, v) => {
-        el.textContent =
-          (el.dataset.prefix || '') + fmt(v, +(el.dataset.decimals || 0)) + (el.dataset.suffix || '')
-      }
-
-      if (reduce) {
-        nums.forEach((el) => render(el, +el.dataset.anum))
-        return
-      }
-
-      gsap.set(line, { strokeDasharray: 1, strokeDashoffset: 1 })
-      gsap.set(fill, { opacity: 0 })
-      gsap.set(notifs, { opacity: 0, y: 22, scale: 0.88 })
-      nums.forEach((el) => render(el, 0))
-
-      const tl = gsap.timeline({
-        defaults: { ease: 'power3.out' },
-        scrollTrigger: { trigger: root, start: 'top 72%', once: true },
-      })
-      tl.to(line, { strokeDashoffset: 0, duration: 1.3, ease: 'power2.inOut' }, 0.2)
-        .to(fill, { opacity: 1, duration: 0.7 }, 1.2)
-        .to(notifs, { opacity: 1, y: 0, scale: 1, duration: 0.75, ease: 'back.out(1.7)', stagger: 0.3 }, 0.5)
-      nums.forEach((el) => {
-        const state = { v: 0 }
-        tl.to(
-          state,
-          { v: +el.dataset.anum, duration: 1.5, ease: 'power2.out', onUpdate: () => render(el, state.v) },
-          0.55
-        )
-      })
-
-      /* notifications keep landing — a gentle nudge every few seconds */
-      const loop = gsap.timeline({ repeat: -1, repeatDelay: 3.4, delay: 4 })
-      notifs.forEach((n, i) => {
-        loop.to(
-          n,
-          { y: -6, scale: 1.04, duration: 0.32, yoyo: true, repeat: 1, ease: 'power2.out' },
-          i * 1.9
-        )
-      })
-    }, root)
-
-    return () => ctx.revert()
-  }, [])
+  const current = officialFeatures[activeTab]
 
   return (
     <section className="section section--soft" id="app">
       <div className="container">
-        <div className="split">
-          <div>
-            <p className="eyebrow" data-reveal="fade">
-              <span className="index">04</span> Mobile app
-            </p>
-            <h2 className="title-lg" data-split style={{ marginTop: 20, marginBottom: 24 }}>
-              Your whole business, <em>in your pocket.</em>
-            </h2>
-            <p className="lead" data-reveal="up">
-              The Datacare app for Android and iOS keeps owners in command away from the
-              counter — live gold and silver rates, the day's sales, stock in hand and
-              pending dues, updated the moment they change.
-            </p>
-            <ul className="checklist" data-reveal-group>
-              <li>
-                <i className="tick"><IcCheck /></i>
-                <span>
-                  <strong>Live dashboard</strong> — sales, stock value and outstanding at a
-                  glance, per store or across all branches.
-                </span>
-              </li>
-              <li>
-                <i className="tick"><IcCheck /></i>
-                <span>
-                  <strong>Rate alerts</strong> — set gold and silver thresholds and get
-                  notified the moment the market moves.
-                </span>
-              </li>
-              <li>
-                <i className="tick"><IcCheck /></i>
-                <span>
-                  <strong>WhatsApp sharing</strong> — send invoices, due reminders and scheme
-                  receipts to customers without leaving the app.
-                </span>
-              </li>
-              <li>
-                <i className="tick"><IcCheck /></i>
-                <span>
-                  <strong>Approvals on the go</strong> — sanction discounts, rate overrides and
-                  stock transfers from anywhere.
-                </span>
-              </li>
-            </ul>
-            <div className="app-badges" data-reveal="up">
-              <span className="app-badge">
-                <IcMobile /> Android &amp; iOS
-              </span>
-              <span className="app-badge">
-                <IcWhatsApp /> WhatsApp-native
-              </span>
-            </div>
+        {/* Section Header */}
+        <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 44px auto' }}>
+          <p className="eyebrow" data-reveal="fade" style={{ justifyContent: 'center' }}>
+            <span className="index">04</span> Mobile App &amp; Command Suite
+          </p>
+          <h2 className="title-lg" data-split style={{ marginTop: 16, marginBottom: 20 }}>
+            The Complete Mobile Solution <em>for Modern Jewellers.</em>
+          </h2>
+          <p className="lead" data-reveal="up" style={{ fontSize: '18px', lineHeight: 1.6 }}>
+            A jewellery inventory and billing app for Android and iOS — real-time stock, secure billing, live gold rates and advanced analytics, anytime, anywhere.
+          </p>
+        </div>
+
+        {/* Masterwork Interactive Feature Showcase Hub */}
+        <div
+          style={{
+            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 244, 236, 0.85))',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            border: '1px solid rgba(176, 140, 72, 0.28)',
+            borderRadius: '24px',
+            padding: '36px',
+            boxShadow: '0 24px 60px rgba(176, 140, 72, 0.08)',
+            marginBottom: '44px',
+          }}
+          data-reveal="scale"
+        >
+          {/* Top Feature Selector Tabs */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              overflowX: 'auto',
+              paddingBottom: '20px',
+              borderBottom: '1px solid rgba(176, 140, 72, 0.18)',
+              marginBottom: '32px',
+            }}
+          >
+            {officialFeatures.map((f, i) => {
+              const isActive = i === activeTab
+              return (
+                <button
+                  key={f.id}
+                  onClick={() => setActiveTab(i)}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    padding: '12px 20px',
+                    borderRadius: '999px',
+                    border: isActive
+                      ? '1px solid rgba(176, 140, 72, 0.6)'
+                      : '1px solid rgba(176, 140, 72, 0.18)',
+                    background: isActive
+                      ? 'linear-gradient(135deg, #1c1712, #0d0a07)'
+                      : 'rgba(255, 255, 255, 0.7)',
+                    color: isActive ? '#ffffff' : '#52493e',
+                    fontSize: '14px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    transition: 'all 0.3s ease',
+                    boxShadow: isActive ? '0 8px 20px rgba(0, 0, 0, 0.15)' : 'none',
+                  }}
+                >
+                  <span
+                    style={{
+                      width: '8px',
+                      height: '8px',
+                      borderRadius: '50%',
+                      background: f.accent,
+                      boxShadow: isActive ? `0 0 10px ${f.accent}` : 'none',
+                    }}
+                  ></span>
+                  {f.title}
+                </button>
+              )
+            })}
           </div>
 
-          <div className="phone-wrap" data-reveal="scale" ref={visualRef}>
-            <div className="phone-glow" aria-hidden="true" />
-            <div className="phone-orbit" data-parallax="6" aria-hidden="true" />
+          {/* Active Showcase Stage Card (Split Preview) */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gap: '36px',
+              alignItems: 'center',
+            }}
+          >
+            {/* Left Column: Detailed Description */}
+            <div>
+              <div
+                style={{
+                  display: 'inline-block',
+                  padding: '6px 14px',
+                  borderRadius: '999px',
+                  background: `${current.accent}15`,
+                  border: `1px solid ${current.accent}40`,
+                  fontSize: '11px',
+                  fontWeight: 800,
+                  letterSpacing: '0.1em',
+                  color: current.accent === '#ffd885' || current.accent === '#e8c88b' ? '#b08c48' : current.accent,
+                  marginBottom: '16px',
+                }}
+              >
+                {current.tag}
+              </div>
 
-            <div className="phone" data-3d-scroll="12">
-              <span className="phone__notch" aria-hidden="true" />
-              <div className="phone__screen">
-                <div className="phone__status" aria-hidden="true">
-                  <span>10:04</span>
-                  <span className="phone__signal">
-                    <i /><i /><i /><i />
-                  </span>
-                </div>
-                <div className="phone__bar">
-                  <b>Datacare</b>
-                  <span className="phone__live">
-                    <i className="pulse" /> Live
-                  </span>
-                </div>
-                <div className="phone__rates">
-                  <div className="phone__rate">
-                    <span>Gold 24K / 10g</span>
-                    <b data-anum="104350" data-prefix="₹ ">₹ 0</b> <i>▲ 0.4%</i>
-                  </div>
-                  <div className="phone__rate">
-                    <span>Silver / kg</span>
-                    <b data-anum="118900" data-prefix="₹ ">₹ 0</b> <i>▲ 0.2%</i>
-                  </div>
-                </div>
-                <div className="phone__spark">
-                  <svg viewBox="0 0 260 54" preserveAspectRatio="none" aria-hidden="true">
-                    <path
-                      className="app-fill"
-                      d="M0 42 C 22 40, 34 28, 52 30 S 86 44, 104 38 S 138 16, 158 20 S 196 34, 214 26 S 246 8, 260 10 L 260 54 L 0 54 Z"
-                      fill="rgba(176,140,72,.12)"
-                      stroke="none"
-                    />
-                    <path
-                      className="app-line"
-                      d="M0 42 C 22 40, 34 28, 52 30 S 86 44, 104 38 S 138 16, 158 20 S 196 34, 214 26 S 246 8, 260 10"
-                      fill="none"
-                      stroke="#b08c48"
-                      strokeWidth="2"
-                      pathLength="1"
-                    />
-                  </svg>
-                </div>
-                <div className="phone__row">
-                  <span>Today's sales</span>
-                  <b data-anum="842600" data-prefix="₹ ">₹ 0</b>
-                </div>
-                <div className="phone__row">
-                  <span>Stock in hand</span>
-                  <b data-anum="12.48" data-decimals="2" data-suffix=" kg">0</b>
-                </div>
-                <div className="phone__row">
-                  <span>Dues collected</span>
-                  <span className="up" data-anum="110500" data-prefix="▲ ₹ ">▲ ₹ 0</span>
-                </div>
-                <div className="phone__row">
-                  <span>Orders due this week</span>
-                  <b data-anum="14">0</b>
-                </div>
-                <div className="phone__tabs" aria-hidden="true">
-                  <span className="phone__tab is-on">
-                    <IcChart /> Home
-                  </span>
-                  <span className="phone__tab">
-                    <IcStore /> Stores
-                  </span>
-                  <span className="phone__tab">
-                    <IcBarcode /> Scan
-                  </span>
-                  <span className="phone__tab">
-                    <IcUsers /> Khata
-                  </span>
-                </div>
+              <h3 style={{ fontSize: '28px', fontWeight: 800, color: '#16110a', marginBottom: '8px', fontFamily: 'Georgia, serif' }}>
+                {current.title}
+              </h3>
+
+              <div style={{ fontSize: '15px', fontWeight: 700, color: '#b08c48', marginBottom: '16px' }}>
+                {current.subtitle}
+              </div>
+
+              <p style={{ fontSize: '16px', lineHeight: 1.7, color: '#52493e', marginBottom: '24px' }}>
+                {current.desc}
+              </p>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    color: '#16110a',
+                  }}
+                >
+                  <IcApprove style={{ width: 18, height: 18, color: '#30d158' }} /> Verified Module
+                </span>
+                <span style={{ color: 'rgba(0,0,0,0.2)' }}>•</span>
+                <span
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    color: '#16110a',
+                  }}
+                >
+                  <IcShield style={{ width: 18, height: 18, color: '#00f0ff' }} /> Cloud Encrypted
+                </span>
               </div>
             </div>
 
-            <div className="app-notif app-notif--wa" aria-hidden="true">
-              <span className="app-notif__ic app-notif__ic--wa">
-                <IcWhatsApp />
-              </span>
-              <span>
-                <b>Invoice sent on WhatsApp</b>
-                <small>INV-2481 · delivered ✓✓</small>
-              </span>
-            </div>
-            <div className="app-notif app-notif--rate" aria-hidden="true">
-              <span className="app-notif__ic">
-                <IcReceipt />
-              </span>
-              <span>
-                <b>Rate alert</b>
-                <small>Gold crossed ₹ 10,435 / g</small>
-              </span>
+            {/* Right Column: Live Mobile Console Preview Card */}
+            <div
+              style={{
+                background: 'linear-gradient(145deg, #14100b, #090705)',
+                border: '1px solid rgba(255, 216, 133, 0.28)',
+                borderRadius: '20px',
+                padding: '28px',
+                color: '#ffffff',
+                boxShadow: '0 20px 48px rgba(0, 0, 0, 0.35)',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  paddingBottom: '16px',
+                  borderBottom: '1px solid rgba(255, 216, 133, 0.15)',
+                  marginBottom: '20px',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span
+                    style={{
+                      width: '8px',
+                      height: '8px',
+                      borderRadius: '50%',
+                      background: current.accent,
+                      boxShadow: `0 0 10px ${current.accent}`,
+                    }}
+                  ></span>
+                  <span style={{ fontSize: '11px', fontWeight: 800, letterSpacing: '0.1em', color: current.accent }}>
+                    MOBILE PREVIEW
+                  </span>
+                </div>
+                <span style={{ fontSize: '11px', fontWeight: 800, letterSpacing: '0.1em', color: 'rgba(255, 216, 133, 0.8)' }}>
+                  DATACARE 3.0
+                </span>
+              </div>
+
+              <div style={{ fontSize: '12px', fontWeight: 800, letterSpacing: '0.1em', color: 'rgba(255, 216, 133, 0.7)', marginBottom: '6px' }}>
+                PRIMARY STATUS METRIC
+              </div>
+
+              <div style={{ fontSize: '32px', fontWeight: 800, fontFamily: 'Georgia, serif', color: '#ffe7aa', marginBottom: '8px' }}>
+                {current.preview.metric}
+              </div>
+
+              <div style={{ fontSize: '14px', fontWeight: 700, color: '#ffffff', marginBottom: '14px' }}>
+                {current.preview.sub}
+              </div>
+
+              <div
+                style={{
+                  background: 'rgba(255, 255, 255, 0.04)',
+                  border: '1px solid rgba(255, 216, 133, 0.15)',
+                  borderRadius: '12px',
+                  padding: '14px 16px',
+                  fontSize: '13px',
+                  lineHeight: 1.5,
+                  color: 'rgba(244, 238, 225, 0.85)',
+                }}
+              >
+                {current.preview.detail}
+              </div>
             </div>
           </div>
+        </div>
+
+        {/* 5 Feature Cards Grid (Overview Cards) */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: '16px',
+            marginBottom: '40px',
+          }}
+          data-reveal-group
+        >
+          {officialFeatures.map((f, i) => {
+            const IconComp = f.icon
+            const isActive = i === activeTab
+            return (
+              <div
+                key={i}
+                onClick={() => setActiveTab(i)}
+                style={{
+                  background: isActive
+                    ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 244, 236, 0.9))'
+                    : 'rgba(255, 255, 255, 0.7)',
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
+                  border: isActive
+                    ? '1.5px solid rgba(176, 140, 72, 0.6)'
+                    : '1px solid rgba(176, 140, 72, 0.22)',
+                  borderRadius: '18px',
+                  padding: '24px',
+                  boxShadow: isActive
+                    ? '0 14px 36px rgba(176, 140, 72, 0.15)'
+                    : '0 8px 24px rgba(0, 0, 0, 0.03)',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  transform: isActive ? 'translateY(-3px)' : 'none',
+                }}
+              >
+                <div
+                  style={{
+                    width: '44px',
+                    height: '44px',
+                    borderRadius: '12px',
+                    background: `${f.accent}15`,
+                    border: `1px solid ${f.accent}30`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: f.accent === '#ffd885' || f.accent === '#e8c88b' ? '#b08c48' : f.accent,
+                    marginBottom: '16px',
+                  }}
+                >
+                  <IconComp style={{ width: 22, height: 22 }} />
+                </div>
+                <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#16110a', marginBottom: '8px' }}>
+                  {f.title}
+                </h3>
+                <p style={{ fontSize: '13.5px', lineHeight: 1.5, color: '#52493e', margin: 0 }}>
+                  {f.desc}
+                </p>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Store & Platform Action Badges */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '16px',
+            flexWrap: 'wrap',
+          }}
+          data-reveal="up"
+        >
+          <span className="app-badge" style={{ padding: '14px 28px', fontSize: '15px', fontWeight: 700 }}>
+            <IcMobile /> Android &amp; iOS Apps
+          </span>
+          <span className="app-badge" style={{ padding: '14px 28px', fontSize: '15px', fontWeight: 700 }}>
+            <IcWhatsApp /> WhatsApp Business Integration
+          </span>
         </div>
       </div>
     </section>

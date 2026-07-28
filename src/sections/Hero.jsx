@@ -8,15 +8,16 @@ export default function Hero() {
       <div className="container hero__grid">
         <div className="hero__copy">
           <p className="eyebrow" data-reveal="fade" data-delay="0.1">
-            Advanced jewellery accounting software
+            Jewellery ERP &amp; billing software · Dubai &amp; India
           </p>
           <h1 className="hero__title" data-split>
             Every gram. Every stone. <em>Perfectly accounted.</em>
           </h1>
           <p className="lead hero__lead" data-reveal="up" data-delay="0.35">
-            One platform running the whole jewellery trade — retail counters, wholesale desks,
-            manufacturing floors and bullion books — trusted by 6,500+ jewellers across the
-            UAE, India and beyond.
+            Jewellery software that runs the whole trade — retail counters, wholesale desks,
+            manufacturing floors and bullion books. HUID-compliant tagging, RFID stock takes
+            and GST/VAT-ready billing, trusted by 6,500+ jewellers across the UAE, India and
+            beyond.
           </p>
           <div className="hero__actions" data-reveal="up" data-delay="0.5">
             <a href="#contact" className="btn btn--gold">

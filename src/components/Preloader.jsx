@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap, reducedMotion } from '../lib/anim.js'
-import { LogoMark } from './icons.jsx'
+import Logo from './Logo.jsx'
 import { scroll } from '../lib/scroll.js'
 
 /* Plays once per browser session, then fades away. */
@@ -43,7 +43,7 @@ export default function Preloader() {
 
   return (
     <div className="preloader" ref={rootRef}>
-      <LogoMark className="preloader__mark" />
+      <Logo size={64} className="preloader__mark" />
       <span className="preloader__word">Datacare Softech</span>
       <div className="preloader__bar">
         <i ref={barRef} />

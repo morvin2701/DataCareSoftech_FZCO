@@ -1,6 +1,9 @@
 import { useState } from 'react'
-import { LogoMark, IcFacebook, IcLinkedIn, IcInstagram } from './icons.jsx'
+import { IcFacebook, IcLinkedIn, IcInstagram } from './icons.jsx'
+import Logo from './Logo.jsx'
 import { products, company } from '../data/products.js'
+
+const tel = (n) => `tel:${n.replace(/[^\d+]/g, '')}`
 
 export default function Footer() {
   const [newsMsg, setNewsMsg] = useState('')
@@ -29,7 +32,7 @@ export default function Footer() {
         <div className="footer__grid">
           <div className="footer__brand">
             <a href="#home" className="nav__brand" aria-label="Datacare Softech FZCO — back to top">
-              <LogoMark style={{ width: 38, height: 38 }} />
+              <Logo size={44} />
               <span className="nav__brand-name">
                 Datacare
                 <span className="nav__brand-sub">Softech FZCO</span>
@@ -39,6 +42,7 @@ export default function Footer() {
               Jewellery business software crafted since 2010 — retail, wholesale,
               manufacturing, imitation and bullion, run from one precise platform.
             </p>
+            <address className="footer__nap">{company.address}</address>
             <div className="footer__socials">
               <a href="https://www.facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">
                 <IcFacebook />
@@ -69,7 +73,6 @@ export default function Footer() {
               <li><a href="#home">Home</a></li>
               <li><a href="#about">About us</a></li>
               <li><a href="#features">Features</a></li>
-              <li><a href="#app">Mobile app</a></li>
               <li><a href="#process">How we onboard</a></li>
               <li><a href="#faq">FAQ</a></li>
               <li><a href="#contact">Book a demo</a></li>
@@ -95,19 +98,26 @@ export default function Footer() {
               <button type="submit">Join</button>
             </form>
             {newsMsg && <p className="footer__news-note">{newsMsg}</p>}
-            <ul className="footer__list" style={{ marginTop: 26 }}>
+
+            <ul className="footer__contact">
               <li>
-                <a href={`mailto:${company.email}`}>{company.email}</a>
+                <span className="footer__contact-tag">UAE</span>
+                <span className="footer__contact-vals">
+                  <a href={tel(company.phoneUAE)}>{company.phoneUAE}</a>
+                </span>
               </li>
               <li>
-                <a href="tel:+971551760454">
-                  <b>UAE</b> — {company.phoneUAE}
-                </a>
+                <span className="footer__contact-tag">India</span>
+                <span className="footer__contact-vals">
+                  <a href={tel(company.phoneIN1)}>{company.phoneIN1}</a>
+                  <a href={tel(company.phoneIN2)}>{company.phoneIN2}</a>
+                </span>
               </li>
               <li>
-                <a href="tel:+918758111027">
-                  <b>India</b> — {company.phoneIN1}
-                </a>
+                <span className="footer__contact-tag">Email</span>
+                <span className="footer__contact-vals">
+                  <a href={`mailto:${company.email}`}>{company.email}</a>
+                </span>
               </li>
             </ul>
           </div>

@@ -83,9 +83,9 @@ export default function Features() {
             </h2>
           </div>
           <p className="lead" data-reveal="up">
-            Eight core modules cover the daily rhythm of a jewellery business — billing,
-            stock, khata, orders, lending and schemes — reachable from the shop floor,
-            the back office or your phone.
+            Eight core modules of jewellery billing and inventory software cover the daily
+            rhythm of the business — billing, stock, khata, orders, lending and schemes —
+            reachable from the shop floor, the back office or your phone.
           </p>
         </div>
 

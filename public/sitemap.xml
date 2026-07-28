@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://datacaresoftechfzco.com/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://datacaresoftechfzco.com/og-image.png</image:loc>
+      <image:title>Datacare Softech FZCO — jewellery software for Dubai and India</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://datacaresoftechfzco.com/software-showcase.png</image:loc>
+      <image:title>Datacare jewellery software screens</image:title>
+    </image:image>
+  </url>
+</urlset>

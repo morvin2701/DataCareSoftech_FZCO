@@ -96,8 +96,9 @@ export const company = {
   name: 'Datacare Softech FZCO',
   email: 'datacare.shreyash@gmail.com',
   phoneUAE: '+971 55 176 0454',
-  phoneIN1: '+91 87581 11027',
-  phoneIN2: '+91 95586 02244',
+  phoneIN1: '+91 95586 02244',
+  phoneIN2: '+91 87581 11027',
+  
   address: 'Dubai Silicon Oasis, DDP, Dubai, United Arab Emirates',
   whatsapp: 'https://wa.me/971551760454',
   hours: [

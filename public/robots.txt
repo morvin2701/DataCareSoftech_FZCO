@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# no crawl budget wasted on the build output or the download bundle
+Disallow: /software-images.zip
+
+Sitemap: https://datacaresoftechfzco.com/sitemap.xml

@@ -44,15 +44,16 @@ export default function Contact() {
         <div className="section-head section-head--split">
           <div>
             <p className="eyebrow" data-reveal="fade">
-              <span className="index">09</span> Let's connect
+              <span className="index">08</span> Let's connect
             </p>
             <h2 className="title-lg" data-split style={{ marginTop: 20 }}>
               See it running on <em>your own numbers.</em>
             </h2>
           </div>
           <p className="lead" data-reveal="up">
-            Book a live demo and we'll walk your actual workflow — your metals, your rates,
-            your billing formats — through the platform. No slideware.
+            Book a free jewellery software demo in Dubai or India and we'll walk your actual
+            workflow — your metals, your rates, your billing formats — through the platform.
+            No slideware.
           </p>
         </div>
 

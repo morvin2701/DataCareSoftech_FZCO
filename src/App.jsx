@@ -7,6 +7,7 @@ import Preloader from './components/Preloader.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import FloatingButtons from './components/FloatingButtons.jsx'
+import ClickEffects from './components/ClickEffects.jsx'
 
 import Hero from './sections/Hero.jsx'
 import Marquee from './sections/Marquee.jsx'
@@ -16,7 +17,7 @@ import Products from './sections/Products.jsx'
 import AppShowcase from './sections/AppShowcase.jsx'
 import WhyUs from './sections/WhyUs.jsx'
 import Faq from './sections/Faq.jsx'
-import { Process, Testimonials } from './sections/Bands.jsx'
+import { Process } from './sections/Bands.jsx'
 import Contact from './sections/Contact.jsx'
 
 export default function App() {
@@ -57,7 +58,7 @@ export default function App() {
 
   /* start scroll animations once the preloader has cleared */
   useLayoutEffect(() => {
-    let cleanup = () => {}
+    let cleanup = () => { }
     let started = false
     const start = () => {
       if (started) return
@@ -79,6 +80,7 @@ export default function App() {
 
   return (
     <div className="grain">
+      <ClickEffects color="#d0a75e" interactionMode="sniper" showLabel={false} />
       <Preloader />
       <Navbar />
       <main ref={mainRef}>
@@ -90,7 +92,6 @@ export default function App() {
         <AppShowcase />
         <Process />
         <WhyUs />
-        <Testimonials />
         <Faq />
         <Contact />
       </main>

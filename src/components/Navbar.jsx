@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { LogoMark } from './icons.jsx'
+import Logo from './Logo.jsx'
 import { products } from '../data/products.js'
 import { scroll } from '../lib/scroll.js'
 
@@ -70,7 +70,7 @@ export default function Navbar() {
       <header className={`nav ${scrolled ? 'is-scrolled' : ''} ${hidden ? 'is-hidden' : ''}`}>
         <div className="container nav__inner">
           <a href="#home" className="nav__brand" aria-label="Datacare Softech FZCO — back to top">
-            <LogoMark />
+            <Logo size={40} />
             <span className="nav__brand-name">
               Datacare
               <span className="nav__brand-sub">Softech FZCO</span>

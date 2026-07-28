@@ -55,7 +55,8 @@ export default function WhyUs() {
           </div>
           <p className="lead" data-reveal="up">
             Jewellers are careful buyers — they weigh everything. Here is what tips the
-            scale when businesses compare us with everything else on the market.
+            scale when showrooms in Dubai and India compare our jewellery software with
+            everything else on the market.
           </p>
         </div>
         <div className="why-grid" data-reveal-group="tilt">
